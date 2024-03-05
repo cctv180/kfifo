@@ -71,6 +71,16 @@ uint32_t KFIFO_Write_Buffer_Truncated(KFIFO_Handle_t *rb, const void *buffer, ui
 bool KFIFO_Read_Buffer(KFIFO_Handle_t *rb, void *buffer, uint32_t size);
 
 /**
+ * @brief 获取循环缓冲区中从当前写入位置到缓冲区末尾的剩余空间大小。
+ *
+ * @param rb 指向KFIFO_Handle_t结构的指针，表示循环缓冲区的句柄。
+ * @return uint32_t 返回剩余空间的大小。
+ *
+ * 这个函数用于在执行线性写入操作之前检查循环缓冲区中从当前写入位置到末尾还有多少空间。
+ */
+uint32_t KFIFO_Linear_Write_Rem(const KFIFO_Handle_t *rb);
+
+/**
  * @brief 向KFIFO的线性缓冲区写入数据。
  *
  * 这个函数向KFIFO的线性缓冲区写入数据。
@@ -89,6 +99,18 @@ void *KFIFO_Linear_Write(KFIFO_Handle_t *rb);
  * @param size 写入线性缓冲区的字节数。
  */
 void KFIFO_Linear_Write_Finish(KFIFO_Handle_t *rb, uint32_t size);
+
+/**
+ * @brief 获取循环缓冲区中从当前读取位置到缓冲区末尾的剩余数据量。
+ *
+ * @param rb 指向KFIFO_Handle_t结构的指针，表示循环缓冲区的句柄。
+ * @return uint32_t 返回剩余数据量的大小。
+ *
+ * 这个函数用于在执行线性读取操作之前检查循环缓冲区中从当前读取位置到末尾还有多少数据。
+ * 它通过计算缓冲区的总大小和当前读取位置之间的差值来得到剩余数据量。
+ * 使用这个函数可以确保在尝试读取数据之前有足够的数据可用，从而防止读取到不完整或错误的数据。
+ */
+uint32_t KFIFO_Linear_Read_Rem(const KFIFO_Handle_t *rb);
 
 /**
  * @brief 从KFIFO的线性缓冲区读取数据。

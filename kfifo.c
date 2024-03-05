@@ -183,6 +183,11 @@ bool KFIFO_Read_Buffer(KFIFO_Handle_t *rb, void *buffer, uint32_t size)
     return true;
 }
 
+inline uint32_t KFIFO_Linear_Write_Rem(const KFIFO_Handle_t *rb)
+{
+    return RB_REMAIN_IN(rb); // 返回从当前写入位置到缓冲区末尾的剩余空间大小
+}
+
 void *KFIFO_Linear_Write(KFIFO_Handle_t *rb)
 {
     if (RB_OFFSET_IN(rb) == 0)
@@ -198,6 +203,11 @@ void KFIFO_Linear_Write_Finish(KFIFO_Handle_t *rb, uint32_t size)
     rb->in += size;
 }
 
+inline uint32_t KFIFO_Linear_Read_Rem(const KFIFO_Handle_t *rb)
+{
+    return RB_REMAIN_OUT(rb); // 返回从当前读取位置到缓冲区末尾的剩余数据量
+}
+
 void *KFIFO_Linear_Read(KFIFO_Handle_t *rb)
 {
     if (RB_OFFSET_OUT(rb) == 0)
@@ -207,7 +217,6 @@ void *KFIFO_Linear_Read(KFIFO_Handle_t *rb)
 
     return rb->pool;
 }
-
 void KFIFO_Linear_Read_Finish(KFIFO_Handle_t *rb, uint32_t size)
 {
     rb->out += size;
