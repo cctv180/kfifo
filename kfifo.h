@@ -22,7 +22,6 @@ typedef struct KFIFO_Handle
  */
 bool KFIFO_Init(KFIFO_Handle_t *rb, void *pool, uint32_t size);
 
-
 /**
  * @brief 向循环缓冲区写入一个字节。
  *
@@ -50,6 +49,16 @@ bool KFIFO_ReadByte(KFIFO_Handle_t *rb, uint8_t *byte);
  * @return 如果写入操作成功则返回true，否则返回false。
  */
 bool KFIFO_Write_Buffer(KFIFO_Handle_t *rb, const void *buffer, uint32_t size);
+
+/**
+ * @brief 将数据写入KFIFO缓冲区，如果数据长度超过缓冲区剩余空间则进行截尾。
+ *
+ * @param rb 指向KFIFO_Handle_t结构体的指针，代表要操作的FIFO缓冲区。
+ * @param buffer 指向要写入数据的指针。
+ * @param size 要写入的数据长度。
+ * @return uint32_t 返回实际写入的字节数。
+ */
+uint32_t KFIFO_Write_Buffer_Truncated(KFIFO_Handle_t *rb, const void *buffer, uint32_t size);
 
 /**
  * @brief 从循环缓冲区读取一个数据缓冲区。
@@ -125,15 +134,4 @@ bool KFIFO_Peek(KFIFO_Handle_t *rb, uint8_t *byte);
  */
 void KFIFO_Reset(KFIFO_Handle_t *rb);
 
-
 #endif // KFIFO_H
-
-// #define RB_SIZE (rb->mask + 1)        // 缓冲区大小
-// #define RB_USED (rb->in - rb->out)    // 已使用大小
-// #define RB_UNUSED (RB_SIZE - RB_USED) // 空闲大小 #define RB_USED ((rb->in<rb->out)?RB_SIZE-(rb->out-rb->in):(rb->in-rb->out))
-// #define RB_OFFSET_IN (rb->in & rb->mask)   // 计算写入位置
-// #define RB_OFFSET_OUT (rb->out & rb->mask) // 计算读取位置
-
-// #define RB_REMAIN_IN (RB_SIZE - RB_OFFSET_IN)   // 计算从写入位置到环形缓冲区末尾的剩余空间
-// #define RB_REMAIN_OUT (RB_SIZE - RB_OFFSET_OUT) // 计算从读取位置到环形缓冲区末尾的剩余空间
-
