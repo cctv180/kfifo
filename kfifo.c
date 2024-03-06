@@ -190,12 +190,7 @@ inline uint32_t KFIFO_Linear_Write_Rem(const KFIFO_Handle_t *rb)
 
 void *KFIFO_Linear_Write(KFIFO_Handle_t *rb)
 {
-    if (RB_OFFSET_IN(rb) == 0)
-    {
-        return (uint8_t *)rb->pool + RB_OFFSET_IN(rb);
-    }
-
-    return rb->pool;
+    return (uint8_t *)rb->pool + RB_OFFSET_IN(rb);
 }
 
 void KFIFO_Linear_Write_Finish(KFIFO_Handle_t *rb, uint32_t size)
@@ -210,12 +205,7 @@ inline uint32_t KFIFO_Linear_Read_Rem(const KFIFO_Handle_t *rb)
 
 void *KFIFO_Linear_Read(KFIFO_Handle_t *rb)
 {
-    if (RB_OFFSET_OUT(rb) == 0)
-    {
-        return (uint8_t *)rb->pool + RB_OFFSET_OUT(rb);
-    }
-
-    return rb->pool;
+    return (uint8_t *)rb->pool + RB_OFFSET_OUT(rb);
 }
 void KFIFO_Linear_Read_Finish(KFIFO_Handle_t *rb, uint32_t size)
 {
